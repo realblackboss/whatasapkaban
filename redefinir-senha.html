@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redefinir Senha - RealBlackBoss CRM</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      --dark-primary: #0f0f23;
+      --dark-secondary: #16213e;
+      --dark-card: #1a1d29;
+      --dark-surface: #252841;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: #a0aec0;
+      --text-muted: #718096;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background: var(--dark-primary);
+      background-image: 
+        radial-gradient(circle at 25% 25%, #667eea22 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #f5576c22 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #4facfe11 0%, transparent 50%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(245, 87, 108, 0.1));
+      animation: float 20s infinite ease-in-out;
+      filter: blur(1px);
+    }
+    
+    .shape:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .shape:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 5s;
+      background: linear-gradient(45deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+    }
+    
+    .shape:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 10s;
+      background: linear-gradient(45deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));
+    }
+    
+    .shape:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      top: 30%;
+      right: 30%;
+      animation-delay: 15s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(30px, -30px) rotate(90deg) scale(1.1); }
+      50% { transform: translate(-20px, 20px) rotate(180deg) scale(0.9); }
+      75% { transform: translate(20px, -10px) rotate(270deg) scale(1.05); }
+    }
+    
+    /* Glass morphism container */
+    .glass-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Enhanced buttons */
+    .btn-gradient {
+      background: var(--primary-gradient);
+      border: none;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    .btn-gradient:active {
+      transform: translateY(0);
+    }
+    
+    .btn-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-gradient:hover::before {
+      left: 100%;
+    }
+    
+    /* Enhanced inputs */
+    .input-enhanced {
+      background: var(--dark-surface);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .input-enhanced:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      outline: none;
+    }
+    
+    .input-enhanced::placeholder {
+      color: var(--text-muted);
+    }
+    
+    /* Feature cards enhancement */
+    .feature-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    /* Enhanced logo */
+    .logo-enhanced {
+      background: var(--primary-gradient);
+      padding: 12px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .logo-enhanced::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Password strength indicator enhancement */
+    .strength-indicator {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--dark-surface);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .strength-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .strength-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    
+    /* Success message enhancement */
+    .success-toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-left: 4px solid #38ef7d;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Error message enhancement */
+    .error-toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-left: 4px solid #f5576c;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Loading animation enhancement */
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid;
+      border-image: var(--primary-gradient) 1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      position: relative;
+    }
+    
+    .loading-spinner::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      border-top: 2px solid rgba(102, 126, 234, 0.5);
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite reverse;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--dark-secondary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary-gradient);
+    }
+    
+    /* Responsive enhancements */
+    @media (max-width: 1024px) {
+      .shape {
+        opacity: 0.5;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .floating-shapes {
+        display: none;
+      }
+    }
+    
+    /* Page transition effects */
+    .page-enter {
+      animation: pageEnter 0.5s ease-out;
+    }
+    
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Enhanced focus states */
+    .focus-enhanced:focus-within {
+      transform: scale(1.02);
+      transition: transform 0.2s ease;
+    }
+    
+    /* Text gradient effects */
+    .text-gradient {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    /* Reset page specific styles */
+    .reset-container {
+      max-width: 500px;
+      width: 90%;
+      padding: 40px;
+      margin: 0 auto;
+    }
+    
+    .reset-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .reset-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .password-rules {
+      background: rgba(37, 43, 61, 0.6);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      border-left: 3px solid #667eea;
+    }
+    
+    .password-rules ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .password-rules li {
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .password-rules i {
+      margin-right: 8px;
+      width: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+  </div>
+
+  <div class="min-h-screen flex items-center justify-center p-4 page-enter">
+    <div class="glass-container p-8 lg:p-12 max-w-lg w-full">
+      <div class="reset-header">
+        <div class="flex items-center justify-center mb-6">
+          <div class="logo-enhanced w-16 h-16 flex items-center justify-center mr-4">
+            <i class="fas fa-lock text-white text-2xl"></i>
+          </div>
+          <h1 class="text-2xl font-bold text-gradient">RealBlackBoss CRM</h1>
+        </div>
+        <h2 class="text-3xl font-bold text-white mb-2">Redefinir Senha</h2>
+        <p class="text-gray-400">Digite sua nova senha abaixo</p>
+      </div>
+      
+      <div id="message" class="message hidden rounded-lg p-4 mb-6"></div>
+      
+      <form id="reset-form" class="space-y-6">
+        <div class="focus-enhanced">
+          <label for="new-password" class="block text-sm font-medium text-gray-300 mb-2">
+            <i class="fas fa-key mr-2"></i>Nova senha
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="new-password"
+              required
+              minlength="8"
+              placeholder="Crie uma senha forte"
+              class="input-enhanced w-full px-4 py-3 pr-12 rounded-lg text-sm"
+            >
+            <button type="button" id="toggle-password" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="strength-indicator mt-2">
+            <div class="strength-bar w-0" id="password-strength-meter"></div>
+          </div>
+        </div>
+        
+        <div class="password-rules">
+          <ul class="text-xs text-gray-400 mt-2 space-y-1" id="password-rules">
+            <li id="rule-length" class="flex items-center">
+              <i class="fas fa-times text-red-400 mr-2 w-3"></i>Mínimo de 8 caracteres
+            </li>
+            <li id="rule-uppercase" class="flex items-center">
+              <i class="fas fa-times text-red-400 mr-2 w-3"></i>Letra maiúscula
+            </li>
+            <li id="rule-number" class="flex items-center">
+              <i class="fas fa-times text-red-400 mr-2 w-3"></i>Número
+            </li>
+            <li id="rule-special" class="flex items-center">
+              <i class="fas fa-times text-red-400 mr-2 w-3"></i>Caractere especial
+            </li>
+          </ul>
+        </div>
+        
+        <div class="focus-enhanced">
+          <label for="confirm-password" class="block text-sm font-medium text-gray-300 mb-2">
+            <i class="fas fa-lock mr-2"></i>Confirmar nova senha
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="confirm-password"
+              required
+              minlength="8"
+              placeholder="Confirme sua senha"
+              class="input-enhanced w-full px-4 py-3 pr-12 rounded-lg text-sm"
+            >
+            <button type="button" id="toggle-confirm" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="space-y-4 pt-4">
+          <button type="submit" class="btn-gradient w-full py-3 rounded-lg text-sm font-semibold">
+            <span id="btn-text">Redefinir Senha</span>
+          </button>
+          
+          <button type="button" onclick="window.location.href='login.html'" class="w-full py-3 border-2 border-gray-600 text-gray-300 rounded-lg text-sm font-semibold hover:border-purple-500 hover:text-white transition-all duration-300 flex items-center justify-center space-x-2">
+            <i class="fas fa-arrow-left"></i>
+            <span>Voltar ao login</span>
+          </button>
+        </div>
+      </form>
+      
+      <!-- Loading Overlay -->
+      <div id="progress-container" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+        <div class="glass-container p-8 text-center">
+          <div class="loading-spinner mx-auto mb-4"></div>
+          <h3 class="text-white text-lg font-semibold mb-2">Redefinindo sua senha...</h3>
+          <p class="text-gray-300">Estamos atualizando suas credenciais</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Success Message -->
+  <div id="success-message" class="fixed top-4 right-4 success-toast rounded-lg p-4 transform translate-x-full transition-transform duration-500 z-50">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+        <i class="fas fa-check text-white text-sm"></i>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold">Senha redefinida!</h3>
+        <p class="text-gray-300 text-sm">Redirecionando para login...</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Error Message -->
+  <div id="error-message" class="fixed top-4 right-4 error-toast rounded-lg p-4 transform translate-x-full transition-transform duration-500 z-50">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+        <i class="fas fa-exclamation text-white text-sm"></i>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold">Erro ao redefinir</h3>
+        <p class="text-gray-300 text-sm" id="error-text">Tente novamente mais tarde</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Capturar token da URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+
+      // Password toggle functionality
+      function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.querySelector(`#${toggleId} i`);
+        
+        document.getElementById(toggleId).addEventListener('click', function() {
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+          } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+          }
+        });
+      }
+      
+      setupPasswordToggle('new-password', 'toggle-password');
+      setupPasswordToggle('confirm-password', 'toggle-confirm');
+      
+      // Password strength checker
+      const passwordInput = document.getElementById('new-password');
+      passwordInput.addEventListener('input', checkPasswordStrength);
+      
+      function checkPasswordStrength() {
+        const password = document.getElementById('new-password').value;
+        const strengthMeter = document.getElementById('password-strength-meter');
+        const rules = {
+          length: document.getElementById('rule-length'),
+          uppercase: document.getElementById('rule-uppercase'),
+          number: document.getElementById('rule-number'),
+          special: document.getElementById('rule-special')
+        };
+        
+        let strength = 0;
+        
+        const hasMinLength = password.length >= 8;
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+        // Update rules display
+        updateRule(rules.length, hasMinLength);
+        updateRule(rules.uppercase, hasUppercase);
+        updateRule(rules.number, hasNumber);
+        updateRule(rules.special, hasSpecial);
+        
+        // Calculate strength
+        if (hasMinLength) strength += 25;
+        if (hasUppercase) strength += 25;
+        if (hasNumber) strength += 25;
+        if (hasSpecial) strength += 25;
+        
+        // Update strength meter
+        strengthMeter.style.width = `${strength}%`;
+        
+        if (strength < 50) {
+          strengthMeter.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+        } else if (strength < 75) {
+          strengthMeter.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+        } else {
+          strengthMeter.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+        }
+      }
+      
+      function updateRule(element, isValid) {
+        const icon = element.querySelector('i');
+        if (isValid) {
+          icon.classList.remove('fa-times', 'text-red-400');
+          icon.classList.add('fa-check', 'text-green-400');
+          element.classList.add('text-green-400');
+        } else {
+          icon.classList.remove('fa-check', 'text-green-400');
+          icon.classList.add('fa-times', 'text-red-400');
+          element.classList.remove('text-green-400');
+        }
+      }
+      
+      // Form submission
+      document.getElementById('reset-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        // Basic validation
+        if (newPassword.length < 8) {
+          showMessage('A senha deve ter no mínimo 8 caracteres', 'error');
+          return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+          showMessage('As senhas não coincidem', 'error');
+          return;
+        }
+        
+        if (!token) {
+          showMessage('Link de redefinição inválido ou expirado.', 'error');
+          return;
+        }
+        
+        // Show loading
+        const progressContainer = document.getElementById('progress-container');
+        const btnText = document.getElementById('btn-text');
+        progressContainer.classList.remove('opacity-0', 'pointer-events-none');
+        progressContainer.classList.add('opacity-100');
+        btnText.textContent = 'Processando...';
+        
+        try {
+          // Chamada à API para redefinir senha
+          const res = await fetch('/api/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token, password: newPassword })
+          });
+          
+          const data = await res.json();
+          
+          if (data.ok) {
+            // Show success message
+            const successMessage = document.getElementById('success-message');
+            successMessage.classList.remove('translate-x-full');
+            successMessage.classList.add('translate-x-0');
+            
+            // Redirect after delay
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 3000);
+          } else {
+            // Exibir erros da API
+            const errorMsg = data.errors ? data.errors.join('\n') : 'Erro ao redefinir senha';
+            showMessage(errorMsg, 'error');
+          }
+        } catch (err) {
+          console.error('Erro ao redefinir senha:', err);
+          showMessage('Falha na conexão com o servidor', 'error');
+        } finally {
+          // Hide loading
+          progressContainer.classList.add('opacity-0', 'pointer-events-none');
+          progressContainer.classList.remove('opacity-100');
+          btnText.textContent = 'Redefinir Senha';
+        }
+      });
+      
+      function showMessage(text, type) {
+        const messageEl = document.getElementById('message');
+        messageEl.textContent = text;
+        messageEl.className = `message rounded-lg p-4 mb-6 ${type === 'error' ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'}`;
+        messageEl.classList.remove('hidden');
+        
+        // Auto hide message after 5 seconds
+        setTimeout(() => {
+          messageEl.classList.add('hidden');
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>
