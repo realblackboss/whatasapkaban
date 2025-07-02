@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Conversas — CRM WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #21242c;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .main-wrap {
+      display: flex;
+      height: 100vh;
+      max-height: 100vh;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 340px;
+      background: #262b36;
+      display: flex;
+      flex-direction: column;
+      border-right: 1.5px solid #22252c;
+      box-shadow: 2px 0 12px #0003;
+    }
+    .sidebar-header {
+      padding: 28px 28px 14px 28px;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px solid #22252c;
+      letter-spacing: 1px;
+      background: #242730;
+    }
+    .chat-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 6px 12px 6px;
+    }
+    .chat-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: 12px;
+      margin: 9px 8px;
+      background: #242730;
+      cursor: pointer;
+      transition: background 0.14s;
+    }
+    .chat-item.active,
+    .chat-item:hover {
+      background: linear-gradient(90deg,#3ca5f6cc 10%,#51e6c7aa 95%);
+      color: #fff;
+    }
+    .chat-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #343b48;
+      margin-right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #85e1ff;
+      font-weight: bold;
+    }
+    .chat-details {
+      flex: 1;
+      overflow: hidden;
+    }
+    .chat-name {
+      font-size: 1.07rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 3px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .chat-lastmsg {
+      font-size: 0.99rem;
+      color: #c8cdd9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: 0.76;
+    }
+    .chat-time {
+      color: #a2adb7;
+      font-size: 0.97rem;
+      font-weight: 400;
+      min-width: 46px;
+      text-align: right;
+      margin-left: 6px;
+    }
+    /* Chat Panel */
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #23272f;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      background: #242730;
+      padding: 20px 26px;
+      border-bottom: 1px solid #22252c;
+      color: #fff;
+      font-size: 1.19rem;
+      font-weight: bold;
+      min-height: 55px;
+      letter-spacing: 1px;
+    }
+    .panel-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px 16px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .message {
+      max-width: 72%;
+      padding: 13px 20px;
+      border-radius: 14px;
+      font-size: 1.09rem;
+      background: #262b36;
+      color: #f1f1f1;
+      box-shadow: 0 1px 6px #0003;
+      align-self: flex-start;
+      word-break: break-word;
+    }
+    .message.me {
+      background: linear-gradient(90deg, #42d392 5%, #647eff 90%);
+      color: #fff;
+      align-self: flex-end;
+    }
+    .panel-footer {
+      padding: 18px 26px;
+      background: #242730;
+      border-top: 1px solid #22252c;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .input-msg {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1.08rem;
+      background: #23272f;
+      color: #fff;
+      outline: none;
+      margin-right: 4px;
+      box-shadow: 0 1px 4px #0002;
+    }
+    .btn-send {
+      background: linear-gradient(90deg,#42d392 5%,#647eff 90%);
+      color: #fff;
+      font-size: 1.09rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 11px;
+      padding: 13px 23px;
+      cursor: pointer;
+      box-shadow: 0 2px 9px #647eff33;
+      transition: opacity 0.16s;
+    }
+    .btn-send:hover {
+      opacity: 0.93;
+      box-shadow: 0 4px 20px #42d39244;
+    }
+    /* Responsivo */
+    @media (max-width: 800px) {
+      .sidebar { width: 95px; }
+      .sidebar-header { font-size: 1rem; padding: 18px 8px 7px 8px;}
+      .chat-item { margin: 7px 2px; padding: 10px 8px;}
+      .chat-avatar { width: 34px; height: 34px; font-size: 0.98rem; }
+      .chat-name, .chat-lastmsg { font-size: 0.95rem;}
+      .panel-messages { padding: 11px 7px 8px 7px;}
+      .panel-header, .panel-footer { padding: 8px 6px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrap">
+    <!-- Sidebar Chats -->
+    <aside class="sidebar">
+      <div class="sidebar-header">Conversas</div>
+      <div class="chat-list">
+        <!-- Chat example -->
+        <div class="chat-item active">
+          <div class="chat-avatar">JP</div>
+          <div class="chat-details">
+            <div class="chat-name">João Pedro</div>
+            <div class="chat-lastmsg">Última mensagem recebida aqui...</div>
+          </div>
+          <div class="chat-time">12:41</div>
+        </div>
+        <div class="chat-item">
+          <div class="chat-avatar">GB</div>
+          <div class="chat-details">
+            <div class="chat-name">Grupo BlackBoss</div>
+            <div class="chat-lastmsg">🔥 Aguardando próxima mensagem...</div>
+          </div>
+          <div class="chat-time">11:19</div>
+        </div>
+        <!-- ... -->
+      </div>
+    </aside>
+
+    <!-- Main Chat Panel -->
+    <section class="panel">
+      <div class="panel-header">João Pedro</div>
+      <div class="panel-messages">
+        <div class="message">Oi! Preciso de ajuda com o projeto.</div>
+        <div class="message me">Fala, João! O que rolou?</div>
+        <div class="message">O backend não sobe aqui...</div>
+        <div class="message me">Vamos resolver, relaxa! 👊</div>
+      </div>
+      <div class="panel-footer">
+        <input class="input-msg" type="text" placeholder="Digite uma mensagem..." />
+        <button class="btn-send">Enviar</button>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

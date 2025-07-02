@@ -1,0 +1,16 @@
+# 1. Gera o token
+$res = Invoke-RestMethod -Method POST `
+  -Uri "http://localhost:21465/api/NERDWHATS_AMERICA/THISISMYSECURETOKEN/generate-token" `
+  -Headers @{ "accept" = "*/*" }
+
+$token = $res.token
+
+# 2. Inicia a sessão e pega o QRCode
+Invoke-RestMethod -Method POST `
+  -Uri "http://localhost:21465/api/NERDWHATS_AMERICA/start-session" `
+  -Headers @{
+    "accept" = "application/json"
+    "Content-Type" = "application/json"
+    "Authorization" = "Bearer $token"
+  } `
+  -Body '{}'

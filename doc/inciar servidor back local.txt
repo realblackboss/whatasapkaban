@@ -1,0 +1,13 @@
+node server.js
+
+
+
+Teste as rotas:
+
+http://localhost:21465/login
+
+http://localhost:21465/cadastro
+
+http://localhost:21465/test
+
+http://localhost:21465/admin/view-password/1 (simulação)
