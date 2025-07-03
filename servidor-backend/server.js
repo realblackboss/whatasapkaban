@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 // ✅ CAMINHO CORRETO DOS HTMLs
-const publicPath = path.join(__dirname, 'whatasapkaban'); // AJUSTADO
+const publicPath = path.join(__dirname, 'Public'); // AJUSTADO
 app.use(express.static(publicPath));
 
 // ✅ ROTAS HTML

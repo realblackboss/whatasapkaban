@@ -11,10 +11,9 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
-// Função corrigida para adicionar colunas
+// Função para adicionar colunas se não existirem
 const addColumnIfNotExists = (table, column, type) => {
   return new Promise((resolve, reject) => {
-    // Consulta corrigida usando PRAGMA table_info
     db.all(`PRAGMA table_info(${table})`, (err, rows) => {
       if (err) return reject(err);
       
@@ -36,9 +35,8 @@ const addColumnIfNotExists = (table, column, type) => {
   });
 };
 
-// Criar/atualizar tabela de usuários
+// Serialização das operações do banco de dados
 db.serialize(async () => {
-  // Criar tabela se não existir
   await new Promise((resolve, reject) => {
     db.run(`
       CREATE TABLE IF NOT EXISTS users (
@@ -58,7 +56,23 @@ db.serialize(async () => {
     });
   });
 
-  // Adicionar novas colunas se necessário
+  await new Promise((resolve, reject) => {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS password_resets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL,
+        token TEXT NOT NULL,
+        expires_at INTEGER NOT NULL
+      )
+    `, (err) => {
+      if (err) reject(err);
+      else {
+        console.log('Tabela "password_resets" verificada/criada com sucesso');
+        resolve();
+      }
+    });
+  });
+
   try {
     await addColumnIfNotExists('users', 'reset_token', 'TEXT');
     await addColumnIfNotExists('users', 'reset_expires', 'DATETIME');
