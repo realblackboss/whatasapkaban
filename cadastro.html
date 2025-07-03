@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro Premium — RealBlackBoss CRM</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      --dark-primary: #0f0f23;
+      --dark-secondary: #16213e;
+      --dark-card: #1a1d29;
+      --dark-surface: #252841;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-primary: #ffffff;
+      --text-secondary: #a0aec0;
+      --text-muted: #718096;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background: var(--dark-primary);
+      background-image: 
+        radial-gradient(circle at 25% 25%, #667eea22 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #f5576c22 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, #4facfe11 0%, transparent 50%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(245, 87, 108, 0.1));
+      animation: float 20s infinite ease-in-out;
+      filter: blur(1px);
+    }
+    
+    .shape:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .shape:nth-child(2) {
+      width: 200px;
+      height: 200px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 5s;
+      background: linear-gradient(45deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.1));
+    }
+    
+    .shape:nth-child(3) {
+      width: 150px;
+      height: 150px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 10s;
+      background: linear-gradient(45deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1));
+    }
+    
+    .shape:nth-child(4) {
+      width: 100px;
+      height: 100px;
+      top: 30%;
+      right: 30%;
+      animation-delay: 15s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      25% { transform: translate(30px, -30px) rotate(90deg) scale(1.1); }
+      50% { transform: translate(-20px, 20px) rotate(180deg) scale(0.9); }
+      75% { transform: translate(20px, -10px) rotate(270deg) scale(1.05); }
+    }
+    
+    /* Glass morphism container */
+    .glass-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Enhanced buttons */
+    .btn-gradient {
+      background: var(--primary-gradient);
+      border: none;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    .btn-gradient:active {
+      transform: translateY(0);
+    }
+    
+    .btn-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-gradient:hover::before {
+      left: 100%;
+    }
+    
+    /* Enhanced inputs */
+    .input-enhanced {
+      background: var(--dark-surface);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .input-enhanced:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+      outline: none;
+    }
+    
+    .input-enhanced::placeholder {
+      color: var(--text-muted);
+    }
+    
+    /* Feature cards enhancement */
+    .feature-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    /* Enhanced logo */
+    .logo-enhanced {
+      background: var(--primary-gradient);
+      padding: 12px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .logo-enhanced::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Password strength indicator enhancement */
+    .strength-indicator {
+      height: 4px;
+      border-radius: 2px;
+      background: var(--dark-surface);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .strength-bar {
+      height: 100%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .strength-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+    
+    /* Success message enhancement */
+    .success-toast {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-left: 4px solid #38ef7d;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Loading animation enhancement */
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid;
+      border-image: var(--primary-gradient) 1;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      position: relative;
+    }
+    
+    .loading-spinner::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.05);
+      border-top: 2px solid rgba(102, 126, 234, 0.5);
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite reverse;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--dark-secondary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary-gradient);
+    }
+    
+    /* Responsive enhancements */
+    @media (max-width: 1024px) {
+      .shape {
+        opacity: 0.5;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .floating-shapes {
+        display: none;
+      }
+    }
+    
+    /* Page transition effects */
+    .page-enter {
+      animation: pageEnter 0.5s ease-out;
+    }
+    
+    @keyframes pageEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Enhanced focus states */
+    .focus-enhanced:focus-within {
+      transform: scale(1.02);
+      transition: transform 0.2s ease;
+    }
+    
+    /* Text gradient effects */
+    .text-gradient {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+  </style>
+</head>
+<body class="bg-gray-900">
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+  </div>
+
+  <div class="min-h-screen flex items-center justify-center p-4 page-enter">
+    <div class="w-full max-w-6xl flex glass-container overflow-hidden">
+      <!-- Left Panel - Illustration -->
+      <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-900/20 to-blue-900/20 p-12 flex-col justify-center items-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5"></div>
+        <div class="relative z-10 text-center max-w-md">
+          <div class="mb-8">
+            <h2 class="text-4xl font-bold text-gradient mb-4">
+              Potencialize seu Negócio
+            </h2>
+            <p class="text-lg text-gray-300 leading-relaxed">
+              Gerencie seus contatos e conversas do WhatsApp de forma profissional com nossa plataforma premium
+            </p>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="feature-card rounded-xl p-4 flex items-center space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-rocket text-white text-xl"></i>
+              </div>
+              <span class="text-white font-medium">Atendimento 3x mais rápido</span>
+            </div>
+            
+            <div class="feature-card rounded-xl p-4 flex items-center space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-chart-line text-white text-xl"></i>
+              </div>
+              <span class="text-white font-medium">Relatórios avançados</span>
+            </div>
+            
+            <div class="feature-card rounded-xl p-4 flex items-center space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-robot text-white text-xl"></i>
+              </div>
+              <span class="text-white font-medium">IA integrada</span>
+            </div>
+            
+            <div class="feature-card rounded-xl p-4 flex items-center space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-shield-alt text-white text-xl"></i>
+              </div>
+              <span class="text-white font-medium">Segurança certificada</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Panel - Form -->
+      <div class="w-full lg:w-1/2 p-8 lg:p-12">
+        <div class="max-w-md mx-auto">
+          <!-- Header -->
+          <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-6">
+              <div class="logo-enhanced w-16 h-16 flex items-center justify-center mr-4">
+                <i class="fas fa-comments text-white text-2xl"></i>
+              </div>
+              <h1 class="text-2xl font-bold text-gradient">RealBlackBoss CRM</h1>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-2">Criar Conta Premium</h2>
+            <p class="text-gray-400">Preencha os campos abaixo para começar</p>
+          </div>
+          
+          <!-- Form -->
+          <form id="register-form" class="space-y-6" autocomplete="off">
+            <div class="focus-enhanced">
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
+                <i class="fas fa-user mr-2"></i>Nome completo
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                maxlength="60"
+                placeholder="Digite seu nome completo"
+                class="input-enhanced w-full px-4 py-3 rounded-lg text-sm"
+              >
+              <div class="text-red-400 text-xs mt-1 opacity-0 transition-opacity duration-300" id="name-error"></div>
+            </div>
+            
+            <div class="focus-enhanced">
+              <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                <i class="fas fa-envelope mr-2"></i>E-mail
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                maxlength="64"
+                placeholder="seu.email@exemplo.com"
+                class="input-enhanced w-full px-4 py-3 rounded-lg text-sm"
+              >
+              <div class="text-red-400 text-xs mt-1 opacity-0 transition-opacity duration-300" id="email-error"></div>
+            </div>
+            
+            <div class="focus-enhanced">
+              <label for="cpf" class="block text-sm font-medium text-gray-300 mb-2">
+                <i class="fas fa-id-card mr-2"></i>CPF
+              </label>
+              <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                required
+                placeholder="000.000.000-00"
+                class="input-enhanced w-full px-4 py-3 rounded-lg text-sm"
+              >
+              <div class="text-red-400 text-xs mt-1 opacity-0 transition-opacity duration-300" id="cpf-error"></div>
+            </div>
+            
+            <div class="focus-enhanced">
+              <label for="pass" class="block text-sm font-medium text-gray-300 mb-2">
+                <i class="fas fa-lock mr-2"></i>Senha
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  id="pass"
+                  name="pass"
+                  required
+                  minlength="8"
+                  placeholder="Crie uma senha forte"
+                  class="input-enhanced w-full px-4 py-3 pr-12 rounded-lg text-sm"
+                >
+                <button type="button" id="toggle-pass" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="strength-indicator mt-2">
+                <div class="strength-bar w-0" id="password-strength-meter"></div>
+              </div>
+              <ul class="text-xs text-gray-400 mt-2 space-y-1" id="password-rules">
+                <li id="rule-length" class="flex items-center">
+                  <i class="fas fa-times text-red-400 mr-2 w-3"></i>Mínimo de 8 caracteres
+                </li>
+                <li id="rule-uppercase" class="flex items-center">
+                  <i class="fas fa-times text-red-400 mr-2 w-3"></i>Letra maiúscula
+                </li>
+                <li id="rule-number" class="flex items-center">
+                  <i class="fas fa-times text-red-400 mr-2 w-3"></i>Número
+                </li>
+                <li id="rule-special" class="flex items-center">
+                  <i class="fas fa-times text-red-400 mr-2 w-3"></i>Caractere especial
+                </li>
+              </ul>
+              <div class="text-red-400 text-xs mt-1 opacity-0 transition-opacity duration-300" id="pass-error"></div>
+            </div>
+            
+            <div class="focus-enhanced">
+              <label for="confirm" class="block text-sm font-medium text-gray-300 mb-2">
+                <i class="fas fa-lock mr-2"></i>Confirme a senha
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  id="confirm"
+                  name="confirm"
+                  required
+                  minlength="8"
+                  placeholder="Confirme sua senha"
+                  class="input-enhanced w-full px-4 py-3 pr-12 rounded-lg text-sm"
+                >
+                <button type="button" id="toggle-confirm" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="text-red-400 text-xs mt-1 opacity-0 transition-opacity duration-300" id="confirm-error"></div>
+            </div>
+            
+            <div class="space-y-4 pt-4">
+              <button type="submit" class="btn-gradient w-full py-3 rounded-lg text-sm font-semibold">
+                <span id="btn-text">Criar Conta Premium</span>
+              </button>
+              
+              <button type="button" onclick="window.location.href='login.html'" class="w-full py-3 border-2 border-gray-600 text-gray-300 rounded-lg text-sm font-semibold hover:border-purple-500 hover:text-white transition-all duration-300 flex items-center justify-center space-x-2">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar ao login</span>
+              </button>
+            </div>
+          </form>
+          
+          <!-- Footer -->
+          <div class="mt-8 text-center text-xs text-gray-400 border-t border-gray-700 pt-6">
+            <p class="mb-2">
+              Ao criar uma conta, você concorda com nossos 
+              <a href="#" id="terms-link" class="text-purple-400 hover:text-purple-300 transition-colors">Termos de Serviço</a> 
+              e 
+              <a href="#" id="privacy-link" class="text-purple-400 hover:text-purple-300 transition-colors">Política de Privacidade</a>
+            </p>
+            <p class="text-gray-500">© 2023 RealBlackBoss • Powered by Kael</p>
+          </div>
+        </div>
+        
+        <!-- Loading Overlay -->
+        <div id="progress-container" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+          <div class="glass-container p-8 text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <h3 class="text-white text-lg font-semibold mb-2">Criando sua conta...</h3>
+            <p class="text-gray-300">Estamos preparando tudo para você</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Success Message -->
+  <div id="success-message" class="fixed top-4 right-4 success-toast rounded-lg p-4 transform translate-x-full transition-transform duration-500 z-50">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+        <i class="fas fa-check text-white text-sm"></i>
+      </div>
+      <div>
+        <h3 class="text-white font-semibold">Cadastro realizado!</h3>
+        <p class="text-gray-300 text-sm">Redirecionando...</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Terms Modal -->
+  <div id="terms-page" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-container max-w-4xl max-h-[80vh] overflow-y-auto">
+      <div class="p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gradient">Termos de Serviço</h2>
+          <button id="close-terms" class="w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center hover:bg-red-500/30 transition-colors">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="text-gray-300 space-y-4 text-sm leading-relaxed">
+          <div>
+            <h3 class="text-white font-semibold mb-2">1. Aceitação dos Termos</h3>
+            <p>Ao acessar e usar o RealBlackBoss CRM, você concorda em cumprir estes Termos de Serviço e todas as leis e regulamentos aplicáveis.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-2">2. Uso da Plataforma</h3>
+            <p>Você concorda em usar a plataforma apenas para fins legais e é responsável por manter a confidencialidade de sua conta.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-2">3. Propriedade Intelectual</h3>
+            <p>Todo o conteúdo da plataforma é propriedade da RealBlackBoss e está protegido por leis de direitos autorais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Privacy Modal -->
+  <div id="privacy-page" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="glass-container max-w-4xl max-h-[80vh] overflow-y-auto">
+      <div class="p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gradient">Política de Privacidade</h2>
+          <button id="close-privacy" class="w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center hover:bg-red-500/30 transition-colors">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="text-gray-300 space-y-4 text-sm leading-relaxed">
+          <div>
+            <h3 class="text-white font-semibold mb-2">1. Informações Coletadas</h3>
+            <p>Coletamos informações fornecidas diretamente por você, incluindo nome, e-mail e dados de contato.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-2">2. Uso das Informações</h3>
+            <p>Utilizamos as informações para fornecer, operar e melhorar nosso serviço, bem como desenvolver novas funcionalidades.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-2">3. Segurança de Dados</h3>
+            <p>Implementamos medidas de segurança para proteger suas informações pessoais contra acesso não autorizado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Password toggle functionality
+      function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.querySelector(`#${toggleId} i`);
+        
+        document.getElementById(toggleId).addEventListener('click', function() {
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+          } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+          }
+        });
+      }
+      
+      setupPasswordToggle('pass', 'toggle-pass');
+      setupPasswordToggle('confirm', 'toggle-confirm');
+      
+      // CPF formatting
+      const cpfInput = document.getElementById('cpf');
+      cpfInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length > 11) {
+          value = value.slice(0, 11);
+        }
+        
+        if (value.length > 9) {
+          value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        } else if (value.length > 6) {
+          value = value.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+        } else if (value.length > 3) {
+          value = value.replace(/(\d{3})(\d+)/, '$1.$2');
+        }
+        
+        e.target.value = value;
+        validateCPF();
+      });
+      
+      // Password strength checker
+      const passwordInput = document.getElementById('pass');
+      passwordInput.addEventListener('input', checkPasswordStrength);
+      
+      // Form validation functions
+      function validateName() {
+        const nameInput = document.getElementById('name');
+        const errorElement = document.getElementById('name-error');
+        const name = nameInput.value.trim();
+        
+        if (name.length < 3) {
+          showError(nameInput, errorElement, 'Nome deve ter pelo menos 3 caracteres');
+          return false;
+        }
+        
+        hideError(nameInput, errorElement);
+        return true;
+      }
+      
+      function validateEmail() {
+        const emailInput = document.getElementById('email');
+        const errorElement = document.getElementById('email-error');
+        const email = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(email)) {
+          showError(emailInput, errorElement, 'Por favor, insira um e-mail válido');
+          return false;
+        }
+        
+        hideError(emailInput, errorElement);
+        return true;
+      }
+      
+      function validateCPF() {
+        const cpfInput = document.getElementById('cpf');
+        const errorElement = document.getElementById('cpf-error');
+        const cpf = cpfInput.value.replace(/\D/g, '');
+        
+        if (cpf.length !== 11 || !isValidCPF(cpf)) {
+          showError(cpfInput, errorElement, 'CPF inválido');
+          return false;
+        }
+        
+        hideError(cpfInput, errorElement);
+        return true;
+      }
+      
+      function validatePassword() {
+        const passwordInput = document.getElementById('pass');
+        const errorElement = document.getElementById('pass-error');
+        const password = passwordInput.value;
+        
+        if (password.length < 8) {
+          showError(passwordInput, errorElement, 'Senha deve ter no mínimo 8 caracteres');
+          return false;
+        }
+        
+        hideError(passwordInput, errorElement);
+        return true;
+      }
+      
+      function validateConfirmPassword() {
+        const passwordInput = document.getElementById('pass');
+        const confirmInput = document.getElementById('confirm');
+        const errorElement = document.getElementById('confirm-error');
+        
+        if (passwordInput.value !== confirmInput.value) {
+          showError(confirmInput, errorElement, 'As senhas não coincidem');
+          return false;
+        }
+        
+        hideError(confirmInput, errorElement);
+        return true;
+      }
+      
+      function showError(input, errorElement, message) {
+        input.classList.add('border-red-500');
+        errorElement.textContent = message;
+        errorElement.classList.remove('opacity-0');
+        errorElement.classList.add('opacity-100');
+      }
+      
+      function hideError(input, errorElement) {
+        input.classList.remove('border-red-500');
+        errorElement.classList.remove('opacity-100');
+        errorElement.classList.add('opacity-0');
+      }
+      
+      function isValidCPF(cpf) {
+        if (/^(\d)\1{10}$/.test(cpf)) return false;
+        
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+          sum += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let mod = (sum * 10) % 11;
+        if (mod === 10 || mod === 11) mod = 0;
+        if (mod !== parseInt(cpf.charAt(9))) return false;
+        
+        sum = 0;
+        for (let i = 0; i < 10; i++) {
+          sum += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+        mod = (sum * 10) % 11;
+        if (mod === 10 || mod === 11) mod = 0;
+        if (mod !== parseInt(cpf.charAt(10))) return false;
+        
+        return true;
+      }
+      
+      function checkPasswordStrength() {
+        const password = document.getElementById('pass').value;
+        const strengthMeter = document.getElementById('password-strength-meter');
+        const rules = {
+          length: document.getElementById('rule-length'),
+          uppercase: document.getElementById('rule-uppercase'),
+          number: document.getElementById('rule-number'),
+          special: document.getElementById('rule-special')
+        };
+        
+        let strength = 0;
+        
+        const hasMinLength = password.length >= 8;
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+        // Update rules display
+        updateRule(rules.length, hasMinLength);
+        updateRule(rules.uppercase, hasUppercase);
+        updateRule(rules.number, hasNumber);
+        updateRule(rules.special, hasSpecial);
+        
+        // Calculate strength
+        if (hasMinLength) strength += 25;
+        if (hasUppercase) strength += 25;
+        if (hasNumber) strength += 25;
+        if (hasSpecial) strength += 25;
+        
+        // Update strength meter
+        strengthMeter.style.width = `${strength}%`;
+        
+        if (strength < 50) {
+          strengthMeter.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+        } else if (strength < 75) {
+          strengthMeter.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
+        } else {
+          strengthMeter.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+        }
+      }
+      
+      function updateRule(element, isValid) {
+        const icon = element.querySelector('i');
+        if (isValid) {
+          icon.classList.remove('fa-times', 'text-red-400');
+          icon.classList.add('fa-check', 'text-green-400');
+          element.classList.add('text-green-400');
+        } else {
+          icon.classList.remove('fa-check', 'text-green-400');
+          icon.classList.add('fa-times', 'text-red-400');
+          element.classList.remove('text-green-400');
+        }
+      }
+      
+      // Real-time validation
+      document.getElementById('name').addEventListener('input', validateName);
+      document.getElementById('email').addEventListener('input', validateEmail);
+      document.getElementById('cpf').addEventListener('input', validateCPF);
+      document.getElementById('pass').addEventListener('input', function() {
+        validatePassword();
+        checkPasswordStrength();
+      });
+      document.getElementById('confirm').addEventListener('input', validateConfirmPassword);
+      
+      // Form submission - CÓDIGO ATUALIZADO PARA ENVIAR AO BACKEND
+      document.getElementById('register-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isCPFValid = validateCPF();
+        const isPasswordValid = validatePassword();
+        const isConfirmValid = validateConfirmPassword();
+        
+        if (!isNameValid || !isEmailValid || !isCPFValid || !isPasswordValid || !isConfirmValid) {
+          return;
+        }
+        
+        // Show loading
+        const progressContainer = document.getElementById('progress-container');
+        const btnText = document.getElementById('btn-text');
+        
+        progressContainer.classList.remove('opacity-0', 'pointer-events-none');
+        progressContainer.classList.add('opacity-100');
+        btnText.textContent = 'Processando...';
+        
+        // Get form data
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+        const pass = document.getElementById('pass').value;
+        const confirm = document.getElementById('confirm').value;
+        
+        try {
+          // Call real backend API
+          const res = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+              name, 
+              email, 
+              cpf, 
+              password: pass, 
+              confirm 
+            })
+          });
+          
+          const data = await res.json();
+          
+          progressContainer.classList.add('opacity-0', 'pointer-events-none');
+          progressContainer.classList.remove('opacity-100');
+          
+          if (data.ok) {
+            // Success
+            const successMessage = document.getElementById('success-message');
+            successMessage.classList.remove('translate-x-full');
+            successMessage.classList.add('translate-x-0');
+            
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 2000);
+          } else {
+            // Show backend errors
+            alert(data.errors ? data.errors.join('\n') : data.message);
+            btnText.textContent = 'Criar Conta Premium';
+          }
+        } catch (error) {
+          progressContainer.classList.add('opacity-0', 'pointer-events-none');
+          progressContainer.classList.remove('opacity-100');
+          
+          alert('Erro ao conectar com o servidor. Tente novamente!');
+          btnText.textContent = 'Criar Conta Premium';
+        }
+      });
+      
+      // Modal functionality
+      document.getElementById('terms-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const modal = document.getElementById('terms-page');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+      
+      document.getElementById('privacy-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const modal = document.getElementById('privacy-page');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+      
+      document.getElementById('close-terms').addEventListener('click', function() {
+        const modal = document.getElementById('terms-page');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+      
+      document.getElementById('close-privacy').addEventListener('click', function() {
+        const modal = document.getElementById('privacy-page');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
+      
+      // Close modals on backdrop click
+      document.querySelectorAll('#terms-page, #privacy-page').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

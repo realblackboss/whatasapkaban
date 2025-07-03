@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Premium - RealBlackBoss CRM</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #42d392;
+      --secondary: #647eff;
+      --accent: #ff6b6b;
+      --dark-bg: #0a0e1a;
+      --card-bg: #1a1f2e;
+      --input-bg: #252b3d;
+      --text: #e8eaed;
+      --text-secondary: #9aa0a6;
+      --error: #ff5757;
+      --success: #42d392;
+      --warning: #ffa726;
+      --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      --glow: 0 0 30px rgba(66, 211, 146, 0.3);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--dark-bg) 0%, #0d1421 25%, #1a0d21 50%, #0d1421 75%, var(--dark-bg) 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* SISTEMA DE PARTÍCULAS AVANÇADO */
+    .particles-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatParticle 20s infinite linear;
+      opacity: 0;
+    }
+    
+    .particle:nth-child(odd) {
+      background: radial-gradient(circle, rgba(66, 211, 146, 0.6) 0%, rgba(66, 211, 146, 0.1) 70%, transparent 100%);
+    }
+    
+    .particle:nth-child(even) {
+      background: radial-gradient(circle, rgba(100, 126, 255, 0.6) 0%, rgba(100, 126, 255, 0.1) 70%, transparent 100%);
+    }
+    
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    /* NÉVOA ATMOSFÉRICA AVANÇADA */
+    .fog-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .fog-layer {
+      position: absolute;
+      width: 300%;
+      height: 300%;
+      opacity: 0.4;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      filter: blur(20px);
+    }
+    
+    .fog-layer:nth-child(1) {
+      top: -100%;
+      left: -100%;
+      background: 
+        radial-gradient(circle at 30% 40%, rgba(66, 211, 146, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(100, 126, 255, 0.3) 0%, transparent 50%);
+      animation: fogMove1 40s ease-in-out infinite;
+    }
+    
+    .fog-layer:nth-child(2) {
+      top: -150%;
+      left: -150%;
+      background: 
+        radial-gradient(circle at 60% 20%, rgba(255, 107, 107, 0.2) 0%, transparent 60%),
+        radial-gradient(circle at 40% 80%, rgba(255, 167, 38, 0.2) 0%, transparent 60%);
+      animation: fogMove2 50s ease-in-out infinite reverse;
+    }
+    
+    .fog-layer:nth-child(3) {
+      top: -200%;
+      left: -200%;
+      background: 
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+        radial-gradient(circle at 20% 70%, rgba(66, 211, 146, 0.15) 0%, transparent 70%);
+      animation: fogMove3 60s ease-in-out infinite;
+    }
+    
+    @keyframes fogMove1 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(-15%, -10%) rotate(90deg); }
+      50% { transform: translate(-25%, 15%) rotate(180deg); }
+      75% { transform: translate(10%, 25%) rotate(270deg); }
+    }
+    
+    @keyframes fogMove2 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      33% { transform: translate(20%, -15%) rotate(120deg) scale(1.1); }
+      66% { transform: translate(-10%, 20%) rotate(240deg) scale(0.9); }
+    }
+    
+    @keyframes fogMove3 {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-20%, 10%) rotate(72deg); }
+      40% { transform: translate(15%, -20%) rotate(144deg); }
+      60% { transform: translate(25%, 15%) rotate(216deg); }
+      80% { transform: translate(-15%, -25%) rotate(288deg); }
+    }
+    
+    /* ORBES LUMINOSOS FLUTUANTES */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      animation: orbFloat 25s infinite ease-in-out;
+      opacity: 0.6;
+    }
+    
+    .orb:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle, rgba(66, 211, 146, 0.8) 0%, rgba(66, 211, 146, 0.1) 70%, transparent 100%);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .orb:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(100, 126, 255, 0.6) 0%, rgba(100, 126, 255, 0.1) 70%, transparent 100%);
+      top: 60%;
+      right: 15%;
+      animation-delay: -8s;
+    }
+    
+    .orb:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.7) 0%, rgba(255, 107, 107, 0.1) 70%, transparent 100%);
+      bottom: 25%;
+      left: 20%;
+      animation-delay: -15s;
+    }
+    
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -40px) scale(1.1); }
+      50% { transform: translate(-20px, 30px) scale(0.9); }
+      75% { transform: translate(40px, 20px) scale(1.05); }
+    }
+    
+    /* CONTAINER PRINCIPAL */
+    .login-container {
+      background: rgba(26, 31, 46, 0.85);
+      padding: 60px 50px;
+      border-radius: 32px;
+      box-shadow: 
+        var(--shadow),
+        0 0 60px rgba(66, 211, 146, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: containerEntrance 1s ease-out;
+    }
+    
+    @keyframes containerEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(66, 211, 146, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(100, 126, 255, 0.15) 0%, transparent 50%);
+      z-index: -1;
+      animation: containerGlow 20s ease-in-out infinite;
+    }
+    
+    @keyframes containerGlow {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+    }
+    
+    .login-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(66, 211, 146, 0.03) 50%, transparent 100%);
+      z-index: -1;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    /* LOGO */
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      animation: logoEntrance 1.2s ease-out 0.3s both;
+    }
+    
+    @keyframes logoEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    .logo-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      box-shadow: 
+        0 10px 30px rgba(66, 211, 146, 0.4),
+        0 0 20px rgba(100, 126, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .logo-icon:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 
+        0 15px 40px rgba(66, 211, 146, 0.6),
+        0 0 30px rgba(100, 126, 255, 0.5);
+    }
+    
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.8s ease-in-out;
+    }
+    
+    .logo-icon:hover::before {
+      left: 100%;
+    }
+    
+    .logo-icon i {
+      color: white;
+      font-size: 2rem;
+      z-index: 2;
+    }
+    
+    .logo-text {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    
+    /* CABEÇALHO */
+    .login-header {
+      animation: headerEntrance 1.4s ease-out 0.6s both;
+    }
+    
+    @keyframes headerEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .login-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -1px;
+    }
+    
+    .login-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    
+    /* FORMULÁRIO */
+    .form-container {
+      position: relative;
+      animation: formEntrance 1.6s ease-out 0.9s both;
+    }
+    
+    @keyframes formEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .input-group {
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .input-group label i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+    
+    .input-container {
+      position: relative;
+    }
+    
+    .input-container i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      z-index: 2;
+      transition: var(--transition);
+    }
+    
+    .toggle-password {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1.3rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      background: transparent;
+      border: none;
+      padding: 0;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+    
+    .toggle-password:hover {
+      background: rgba(66, 211, 146, 0.1);
+      color: var(--primary);
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 18px 60px 18px 55px;
+      border-radius: 16px;
+      border: 2px solid transparent;
+      background: rgba(37, 43, 61, 0.8);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    }
+    
+    .input-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 
+        0 0 0 4px rgba(66, 211, 146, 0.2),
+        0 10px 30px rgba(66, 211, 146, 0.1);
+      background: rgba(37, 43, 61, 0.9);
+    }
+    
+    .input-group input:focus + .input-container i {
+      color: var(--primary);
+    }
+    
+    .input-group input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 4px rgba(255, 87, 87, 0.2);
+    }
+    
+    .error-message {
+      display: block;
+      margin-top: 10px;
+      color: var(--error);
+      font-size: 0.9rem;
+      height: 24px;
+      opacity: 0;
+      transition: var(--transition);
+      text-align: left;
+      font-weight: 500;
+      padding-left: 10px;
+    }
+    
+    .error-message.show {
+      opacity: 1;
+    }
+    
+    /* LEMBRAR E ESQUECEU SENHA */
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-secondary);
+    }
+    
+    .remember-me input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+    
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 600;
+    }
+    
+    .forgot-password:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    
+    /* BOTÃO DE LOGIN */
+    .login-btn {
+      width: 100%;
+      padding: 20px 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 
+        0 10px 30px rgba(66, 211, 146, 0.4),
+        0 0 20px rgba(100, 126, 255, 0.3);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 40px rgba(66, 211, 146, 0.6),
+        0 0 30px rgba(100, 126, 255, 0.5);
+    }
+    
+    .login-btn:active {
+      transform: translateY(-1px);
+    }
+    
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.8s ease-in-out;
+    }
+    
+    .login-btn:hover::before {
+      left: 100%;
+    }
+    
+    /* CRIAR CONTA */
+    .create-account {
+      margin-top: 30px;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+    
+    .create-account a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    .create-account a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    
+    /* RODAPÉ */
+    .login-footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      line-height: 1.6;
+    }
+    
+    .login-footer a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+      margin: 0 5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .login-footer a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    
+    .support-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .support-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 43, 61, 0.5);
+      padding: 8px 15px;
+      border-radius: 50px;
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .support-link:hover {
+      background: rgba(66, 211, 146, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(66, 211, 146, 0.2);
+      border-color: rgba(66, 211, 146, 0.3);
+    }
+    
+    .support-link i {
+      font-size: 1.2rem;
+    }
+    
+    .support-link.whatsapp {
+      color: #25D366;
+    }
+    
+    .support-link.email {
+      color: #4285F4;
+    }
+    
+    /* LOADING */
+    .progress-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 31, 46, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    
+    .progress-container.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .progress-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 5px solid rgba(255, 255, 255, 0.1);
+      border-top: 5px solid var(--primary);
+      animation: spin 1s linear infinite;
+      margin-bottom: 25px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .progress-container h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    
+    .progress-container p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+    
+    /* MENSAGEM DE SUCESSO */
+    .success-message {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      background: rgba(26, 31, 46, 0.95);
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(66, 211, 146, 0.2);
+      display: flex;
+      align-items: center;
+      transform: translateX(150%);
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 2000;
+      border-left: 5px solid var(--success);
+      backdrop-filter: blur(15px);
+    }
+    
+    .success-message.show {
+      transform: translateX(0);
+    }
+    
+    .success-message i {
+      color: var(--success);
+      font-size: 2rem;
+      margin-right: 20px;
+    }
+    
+    .success-text h3 {
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .success-text p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+    
+    .modal-content {
+      background: rgba(26, 31, 46, 0.95);
+      border-radius: 24px;
+      padding: 40px;
+      width: 90%;
+      max-width: 520px;
+      box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(66, 211, 146, 0.1);
+      position: relative;
+      transform: translateY(30px) scale(0.9);
+      transition: var(--transition);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal.show .modal-content {
+      transform: translateY(0) scale(1);
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal-header h2 {
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .close-modal:hover {
+      color: var(--primary);
+      background: rgba(66, 211, 146, 0.1);
+    }
+    
+    .modal-body p {
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+    
+    .modal-input-group {
+      margin-bottom: 25px;
+    }
+    
+    .modal-input-group input {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: rgba(37, 43, 61, 0.8);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .modal-input-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(66, 211, 146, 0.2);
+    }
+    
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .modal-btn {
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-weight: 600;
+    }
+    
+    .modal-btn.cancel {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .modal-btn.cancel:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+    }
+    
+    .modal-btn.submit {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      box-shadow: 0 5px 15px rgba(66, 211, 146, 0.3);
+    }
+    
+    .modal-btn.submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(66, 211, 146, 0.4);
+    }
+    
+    /* PÁGINAS */
+    .page-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-bg);
+      z-index: 2500;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    
+    .page-content {
+      background: rgba(26, 31, 46, 0.95);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 900px;
+      margin: 40px auto;
+      box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(66, 211, 146, 0.1);
+      position: relative;
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .page-header h2 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    
+    .close-page {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    .close-page:hover {
+      color: var(--primary);
+      background: rgba(66, 211, 146, 0.1);
+    }
+    
+    .page-body {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+    
+    .page-body h3 {
+      color: var(--text);
+      margin: 30px 0 15px 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .page-body ul {
+      padding-left: 25px;
+      margin: 20px 0;
+    }
+    
+    .page-body li {
+      margin-bottom: 12px;
+      position: relative;
+    }
+    
+    .page-body li::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    
+    /* RESPONSIVIDADE */
+    @media (max-width: 768px) {
+      .login-container {
+        padding: 40px 30px;
+        margin: 10px;
+      }
+      
+      .login-header h1 {
+        font-size: 2rem;
+      }
+      
+      .logo-text {
+        font-size: 1.8rem;
+      }
+      
+      .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .page-content {
+        padding: 30px 20px;
+        margin: 20px 10px;
+      }
+      
+      .success-message {
+        right: 20px;
+        top: 20px;
+        padding: 15px 20px;
+      }
+      
+      .support-links {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+      
+      .input-group input {
+        padding: 16px 50px 16px 45px;
+      }
+      
+      .logo-icon {
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+      }
+      
+      .logo-text {
+        font-size: 1.6rem;
+      }
+      
+      .support-link {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* ANIMAÇÃO DE SHAKE PARA ERROS */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+      20%, 40%, 60%, 80% { transform: translateX(8px); }
+    }
+    .shake {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    /* Estilo minimalista para links de suporte */
+    .support-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .support-link:hover {
+      color: var(--text);
+      text-shadow: 0 0 10px rgba(66, 211, 146, 0.7);
+    }
+
+    .support-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .support-link:hover::after {
+      transform: scaleX(1);
+      box-shadow: 0 0 15px rgba(66, 211, 146, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sistema de partículas -->
+  <div class="particles-container">
+    <div class="particle-layer"></div>
+  </div>
+  
+  <!-- Névoa atmosférica -->
+  <div class="fog-container">
+    <div class="fog-layer"></div>
+    <div class="fog-layer"></div>
+    <div class="fog-layer"></div>
+  </div>
+  
+  <!-- Orbes luminosos -->
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  
+  <form class="login-container" id="login-form">
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-comments"></i>
+      </div>
+      <div class="logo-text">RealBlackBoss CRM</div>
+    </div>
+    
+    <div class="login-header">
+      <h1>Bem-vindo de volta</h1>
+      <p>Entre em sua conta para gerenciar seus contatos e conversas do WhatsApp</p>
+    </div>
+    
+    <div class="form-container">
+      <div class="input-group">
+        <label for="user"><i class="fas fa-user"></i> Usuário ou E-mail</label>
+        <div class="input-container">
+          <i class="fas fa-user"></i>
+          <input type="text" id="user" name="user" autocomplete="username" required placeholder="Digite seu usuário ou e-mail" value="admin">
+        </div>
+        <span class="error-message" id="user-error"></span>
+      </div>
+      
+      <div class="input-group">
+        <label for="pass"><i class="fas fa-lock"></i> Senha</label>
+        <div class="input-container">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="pass" name="pass" autocomplete="current-password" required placeholder="Digite sua senha" value="admin123">
+          <button type="button" class="toggle-password" id="toggle-pass">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <span class="error-message" id="pass-error"></span>
+      </div>
+      
+      <div class="remember-forgot">
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember" checked>
+          <label for="remember">Lembrar-me</label>
+        </div>
+        <a href="#" id="forgot-password" class="forgot-password">Esqueceu sua senha?</a>
+      </div>
+      
+      <button class="login-btn" type="submit">
+        <span id="btn-text">Entrar na Plataforma</span>
+      </button>
+      
+      <div class="create-account">
+        Não tem uma conta? <a href="/cadastro">Criar conta premium</a>
+      </div>
+    </div>
+    
+    <div class="login-footer">
+      <p>Ao entrar, você concorda com nossos:</p>
+      
+      <div class="footer-links-group">
+        <a href="#" id="terms-link">Termos de Serviço</a>
+        <span class="separator">-</span>
+        <a href="#" id="privacy-link">Política de Privacidade</a>
+      </div>
+      
+      <div class="footer-links-group">
+        <a href="https://wa.me/5582988951440" target="_blank">Suporte WhatsApp</a>
+        <span class="separator">-</span>
+        <a href="mailto:reallblackboss@gmail.com">Suporte E-mail</a>
+      </div>
+      
+      <p class="copyright">© 2023 RealBlackBoss - Powered by Kael</p>
+    </div>
+    
+    <div class="progress-container" id="progress-container">
+      <div class="progress-circle"></div>
+      <h3>Autenticando...</h3>
+      <p>Estamos verificando suas credenciais</p>
+    </div>
+  </form>
+  
+  <div class="success-message" id="success-message">
+    <i class="fas fa-check-circle"></i>
+    <div class="success-text">
+      <h3>Login realizado com sucesso!</h3>
+      <p>Redirecionando para o painel...</p>
+    </div>
+  </div>
+  
+  <!-- Modal de recuperação de senha -->
+  <div class="modal" id="password-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Recuperar Senha</h2>
+        <button class="close-modal" id="close-password-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Digite seu e-mail cadastrado abaixo. Enviaremos um link para redefinir sua senha.</p>
+        <div class="modal-input-group">
+          <input type="email" id="recovery-email" placeholder="seu.email@exemplo.com" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn cancel" id="cancel-recovery">Cancelar</button>
+        <button class="modal-btn submit" id="submit-recovery">Enviar Instruções</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Página de Termos de Serviço -->
+  <div class="page-container" id="terms-page">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Termos de Serviço</h2>
+        <button class="close-page" id="close-terms">&times;</button>
+      </div>
+      <div class="page-body">
+        <h3>1. Aceitação dos Termos</h3>
+        <p>Ao acessar e usar o RealBlackBoss CRM, você concorda em cumprir estes Termos de Serviço e todas as leis e regulamentos aplicáveis. Se você não concordar com algum destes termos, está proibido de usar ou acessar este serviço.</p>
+        
+        <h3>2. Uso da Plataforma</h3>
+        <p>Você concorda em usar a plataforma apenas para fins legais e de acordo com estes Termos. Você é responsável por manter a confidencialidade de sua conta e senha.</p>
+        
+        <h3>3. Propriedade Intelectual</h3>
+        <p>Todo o conteúdo da plataforma, incluindo textos, gráficos, logotipos, ícones, imagens e software, é propriedade da RealBlackBoss ou de seus licenciadores e está protegido por leis de direitos autorais e propriedade intelectual.</p>
+        
+        <h3>4. Limitação de Responsabilidade</h3>
+        <p>Em nenhuma circunstância a RealBlackBoss será responsável por quaisquer danos diretos, indiretos, incidentais ou consequenciais decorrentes do uso ou incapacidade de uso do serviço.</p>
+        
+        <h3>5. Modificações</h3>
+        <p>Reservamos o direito de modificar estes Termos a qualquer momento. As alterações entrarão em vigor imediatamente após a publicação. Seu uso continuado do serviço após tais modificações constitui sua concordância com os Termos revisados.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Página de Política de Privacidade -->
+  <div class="page-container" id="privacy-page">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Política de Privacidade</h2>
+        <button class="close-page" id="close-privacy">&times;</button>
+      </div>
+      <div class="page-body">
+        <h3>1. Informações Coletadas</h3>
+        <p>Coletamos informações que você nos fornece diretamente, como quando cria uma conta, incluindo:</p>
+        <ul>
+          <li>Nome completo</li>
+          <li>Endereço de e-mail</li>
+          <li>Informações de contato</li>
+          <li>Dados de pagamento (para contas premium)</li>
+        </ul>
+        
+        <h3>2. Uso das Informações</h3>
+        <p>Utilizamos as informações coletadas para:</p>
+        <ul>
+          <li>Fornecer, operar e manter nosso serviço</li>
+          <li>Melhorar, personalizar e expandir nosso serviço</li>
+          <li>Entender e analisar como você utiliza nosso serviço</li>
+          <li>Desenvolver novos produtos, serviços e funcionalidades</li>
+        </ul>
+        
+        <h3>3. Compartilhamento de Informações</h3>
+        <p>Não vendemos nem alugamos suas informações pessoais a terceiros. Podemos compartilhar suas informações nas seguintes situações:</p>
+        <ul>
+          <li>Com prestadores de serviços para monitorar e analisar o uso de nosso serviço</li>
+          <li>Para cumprir com obrigações legais</li>
+          <li>Proteger e defender os direitos ou propriedade da empresa</li>
+        </ul>
+        
+        <h3>4. Segurança de Dados</h3>
+        <p>A segurança de seus dados é importante para nós, mas lembre-se que nenhum método de transmissão pela Internet ou método de armazenamento eletrônico é 100% seguro. Embora nos esforcemos para usar meios comercialmente aceitáveis para proteger seus dados pessoais, não podemos garantir sua segurança absoluta.</p>
+        
+        <h3>5. Alterações nesta Política</h3>
+        <p>Podemos atualizar nossa Política de Privacidade periodicamente. Notificaremos você sobre quaisquer alterações publicando a nova Política de Privacidade nesta página.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Criar sistema de partículas avançado
+      function createAdvancedParticles() {
+        const particleLayer = document.querySelector('.particle-layer');
+        const particleCount = 50;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          // Tamanho variado
+          const size = Math.random() * 12 + 4;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          // Posição inicial
+          const posX = Math.random() * 100;
+          particle.style.left = `${posX}%`;
+          particle.style.top = '100%';
+          
+          // Velocidade e atraso
+          const duration = Math.random() * 15 + 10;
+          const delay = Math.random() * 10;
+          
+          particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+          
+          particleLayer.appendChild(particle);
+        }
+      }
+      
+      createAdvancedParticles();
+      
+      // Toggle password visibility
+      function setupPasswordToggle(inputId, toggleId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.querySelector(`#${toggleId} i`);
+        
+        document.getElementById(toggleId).addEventListener('click', function() {
+          if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+          } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+          }
+        });
+      }
+      
+      setupPasswordToggle('pass', 'toggle-pass');
+      
+      // FUNÇÃO DE LOGIN ATUALIZADA
+      document.getElementById('login-form').onsubmit = async (e) => {
+        e.preventDefault();
+        
+        // Validar campos antes de enviar
+        const isUserValid = validateUser();
+        const isPassValid = validatePassword();
+        
+        if (!isUserValid || !isPassValid) {
+          return;
+        }
+        
+        // Mostrar loading
+        document.getElementById('progress-container').classList.add('active');
+        document.getElementById('btn-text').textContent = 'Autenticando...';
+        
+        const user = document.getElementById('user').value.trim();
+        const pass = document.getElementById('pass').value;
+        
+        try {
+          // Timeout para a requisição (8 segundos)
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000);
+          
+          // Chamar API
+          const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ 
+              user, 
+              pass,
+              remember: document.getElementById('remember').checked
+            }),
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          // Verificar status da resposta
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          
+          const data = await res.json();
+          
+          if (data.ok) {
+            // Sucesso - mostrar animação
+            document.getElementById('success-message').classList.add('show');
+            
+            // Redirecionar após 1.5 segundos
+            setTimeout(() => {
+              window.location.href = data.redirect || 'chat.html';
+            }, 1500);
+          } else {
+            // Tratar erros da API
+            handleLoginError(data);
+          }
+        } catch (error) {
+          console.error('Erro na autenticação:', error);
+          
+          // Mensagens de erro específicas
+          let errorMessage = 'Falha na conexão com o servidor';
+          
+          if (error.name === 'AbortError') {
+            errorMessage = 'Tempo excedido. Verifique sua conexão';
+          } else if (error.message.includes('HTTP error')) {
+            errorMessage = 'Erro no servidor. Tente novamente mais tarde';
+          }
+          
+          handleLoginError({
+            errors: [errorMessage]
+          });
+        } finally {
+          // Restaurar estado do botão
+          document.getElementById('progress-container').classList.remove('active');
+          document.getElementById('btn-text').textContent = 'Entrar na Plataforma';
+        }
+      };
+      
+      // Função para tratar erros de login
+      function handleLoginError(data) {
+        document.getElementById('user').classList.add('error');
+        document.getElementById('pass').classList.add('error');
+        
+        const errorMessage = data.errors 
+          ? data.errors.join('\n') 
+          : 'Credenciais inválidas. Tente novamente';
+        
+        document.getElementById('user-error').textContent = errorMessage;
+        document.getElementById('user-error').classList.add('show');
+        document.getElementById('pass-error').textContent = errorMessage;
+        document.getElementById('pass-error').classList.add('show');
+        
+        // Adicionar animação de erro
+        const loginForm = document.getElementById('login-form');
+        loginForm.classList.add('shake');
+        setTimeout(() => loginForm.classList.remove('shake'), 500);
+      }
+      
+      // Validações básicas de campos
+      function validateUser() {
+        const userInput = document.getElementById('user');
+        const errorElement = document.getElementById('user-error');
+        const user = userInput.value.trim();
+        
+        if (user.length < 3) {
+          userInput.classList.add('error');
+          errorElement.textContent = 'Por favor, insira um usuário ou e-mail válido';
+          errorElement.classList.add('show');
+          return false;
+        }
+        
+        userInput.classList.remove('error');
+        errorElement.classList.remove('show');
+        return true;
+      }
+      
+      function validatePassword() {
+        const passwordInput = document.getElementById('pass');
+        const errorElement = document.getElementById('pass-error');
+        const password = passwordInput.value;
+        
+        if (password.length < 6) {
+          passwordInput.classList.add('error');
+          errorElement.textContent = 'A senha deve ter pelo menos 6 caracteres';
+          errorElement.classList.add('show');
+          return false;
+        }
+        
+        passwordInput.classList.remove('error');
+        errorElement.classList.remove('show');
+        return true;
+      }
+      
+      // Limpar erros ao digitar
+      document.getElementById('user').addEventListener('input', function() {
+        validateUser();
+        clearCredentialErrors();
+      });
+      
+      document.getElementById('pass').addEventListener('input', function() {
+        validatePassword();
+        clearCredentialErrors();
+      });
+      
+      function clearCredentialErrors() {
+        document.getElementById('user').classList.remove('error');
+        document.getElementById('pass').classList.remove('error');
+        document.getElementById('user-error').classList.remove('show');
+        document.getElementById('pass-error').classList.remove('show');
+      }
+      
+      // Recuperação de senha - ATUALIZADO PARA REQUISIÇÃO REAL
+      document.getElementById('forgot-password').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('password-modal').classList.add('show');
+      });
+      
+      document.getElementById('close-password-modal').addEventListener('click', function() {
+        document.getElementById('password-modal').classList.remove('show');
+      });
+      
+      document.getElementById('cancel-recovery').addEventListener('click', function() {
+        document.getElementById('password-modal').classList.remove('show');
+      });
+      
+      // REQUISIÇÃO REAL PARA RECUPERAÇÃO DE SENHA
+      document.getElementById('submit-recovery').addEventListener('click', async function() {
+        const email = document.getElementById('recovery-email').value;
+        
+        if (!email || !email.includes('@')) {
+          alert('Por favor, insira um e-mail válido');
+          return;
+        }
+        
+        // Desativa botão para evitar múltiplos cliques
+        this.disabled = true;
+        const originalText = this.textContent;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        
+        // Chama o backend de verdade
+        try {
+          const res = await fetch('/api/forgot-password', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ email })
+          });
+          
+          // Esconde modal após submit
+          document.getElementById('password-modal').classList.remove('show');
+          
+          if (res.ok) {
+            // Sucesso visual
+            const successMessage = document.getElementById('success-message');
+            successMessage.querySelector('h3').textContent = 'Instruções enviadas!';
+            successMessage.querySelector('p').textContent = 'Verifique seu e-mail para redefinir sua senha';
+            successMessage.classList.add('show');
+            
+            setTimeout(() => {
+              successMessage.classList.remove('show');
+            }, 3000);
+          } else {
+            const data = await res.json();
+            alert(data.errors ? data.errors.join('\n') : 'Erro ao enviar solicitação.');
+          }
+        } catch (err) {
+          console.error('Erro na recuperação de senha:', err);
+          alert('Erro ao enviar solicitação: ' + err.message);
+        } finally {
+          this.disabled = false;
+          this.textContent = originalText;
+        }
+      });
+      
+      // Páginas de termos e privacidade
+      document.getElementById('terms-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('terms-page').style.display = 'block';
+      });
+      
+      document.getElementById('privacy-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('privacy-page').style.display = 'block';
+      });
+      
+      document.getElementById('close-terms').addEventListener('click', function() {
+        document.getElementById('terms-page').style.display = 'none';
+      });
+      
+      document.getElementById('close-privacy').addEventListener('click', function() {
+        document.getElementById('privacy-page').style.display = 'none';
+      });
+      
+      // Fechar páginas clicando fora
+      document.querySelectorAll('.page-container').forEach(page => {
+        page.addEventListener('click', function(e) {
+          if (e.target === page) {
+            page.style.display = 'none';
+          }
+        });
+      });
+      
+      // Fechar modal clicando fora
+      document.getElementById('password-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
